@@ -1,18 +1,9 @@
-export const blacklist = [
-  "children",
-  "parent",
-  "tempDisplayObjectParent",
-  "scope"
-];
-export const whitelist = [
-  "transform",
-  "position",
-  "scale",
-  "rotation",
-  "pivot",
-  "skew",
-  "anchor"
-];
+import filterProperties from "./properties/index";
+
+function onlyUniquePath(value, index, self) {
+  return self.findIndex(v => v.path === value.path) === index;
+}
+
 class MismatchConstructor {}
 
 export default class InspectorProperties {
@@ -28,20 +19,17 @@ export default class InspectorProperties {
         : MismatchConstructor;
     // this.Point = PIXI.Point
   }
-
   all() {
     if (!window.$pixi) {
       return [];
     }
     const properties = [];
-    for (const property in window.$pixi) {
-      if (property[0] === "_" || blacklist.indexOf(property) !== -1) {
-        continue;
-      }
+    filterProperties(window.$pixi, properties).forEach(property => {
       properties.push(...this.serialize(window.$pixi[property], [property], 3));
-    }
+    });
     properties.sort((a, b) => (a.path > b.path ? 1 : -1));
-    return properties;
+    const clearList = properties.filter(onlyUniquePath);//TODO need not push dublicated
+    return clearList;
   }
   /* eslint-disable */
   set(path, value) {
@@ -71,19 +59,15 @@ export default class InspectorProperties {
       if (Array.isArray(value)) {
         return [{ path: path.join("."), type: "Array" }];
       }
-      if (whitelist.indexOf(path[path.length - 1]) !== -1) {
         const properties = [];
-        for (const property in value) {
-          if (blacklist.indexOf(property) !== -1) {
-            continue;
-          }
-          if (property[0] === "_") {
-            continue;
-          }
-          properties.push(
-            ...this.serialize(value[property], [...path, property], depth)
-          );
-        }
+        filterProperties(value, properties).forEach(property => {
+          // if (properties.find(property => path === property.path)) {
+          // } else {
+            properties.push(
+              ...this.serialize(value[property], [...path, property], depth)
+            );
+          // }
+        });
         if (value instanceof this.ObservablePointRef) {
           properties.push(
             {
@@ -108,7 +92,6 @@ export default class InspectorProperties {
         if (properties.length !== 0) {
           return properties;
         }
-      }
       // (typeof value.constructor ? (value.constructor.name || type) : type
       return [{ path: path.join("."), type: "Object" }];
     }

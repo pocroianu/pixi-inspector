@@ -1,0 +1,19 @@
+export default [
+    "hasLoaded",
+    "height",
+    "imageType",
+    "imageUrl",
+    "isLoading",
+    "mipmap",
+    "origSource",
+    "premultipliedAlpha",
+    "realHeight",
+    "realWidth",
+    "resolution",
+    "scaleMode",
+    "source",
+    "sourceScale",
+    "textureCacheIds",
+    "width",
+    "wrapMode"
+];
