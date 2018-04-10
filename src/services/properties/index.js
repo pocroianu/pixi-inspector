@@ -4,12 +4,14 @@ import Texture from "./Texture";
 import BaseTexture from "./BaseTexture";
 import Sprite from "./Sprite";
 import Text from './Text';
+import TextStyle from './TextStyle';
 
 const implementations = {
     Texture,
     BaseTexture,
     Sprite,
     Text,
+    TextStyle,
 }
 
 function constructorName(pixiObj) {
