@@ -5,6 +5,7 @@ import BaseTexture from "./BaseTexture";
 import Sprite from "./Sprite";
 import Text from './Text';
 import TextStyle from './TextStyle';
+import Container from './Container';
 
 const implementations = {
     Texture,
@@ -12,6 +13,7 @@ const implementations = {
     Sprite,
     Text,
     TextStyle,
+    Container,
 }
 
 function constructorName(pixiObj) {
