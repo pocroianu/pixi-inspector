@@ -41,8 +41,20 @@
 
 
         var dudesContainer = new PIXI.Container();
+        dudesContainer.name = "dudesContainer";
         stage.addChild(dudesContainer);
         // create an array to store a refference to the fish in the pond
+        var subContainer = new PIXI.Container();
+        subContainer.name = "subContainer";
+        dudesContainer.addChild(subContainer);
+
+
+        class NewTypeObject extends PIXI.Sprite {}
+        var texture = PIXI.Texture.fromImage("assets/eggHead.png");
+        var newTypeObject = new NewTypeObject(texture);
+        newTypeObject.name = "extended_Sprite";
+        subContainer.addChild(newTypeObject);
+
         var dudeArray = [];
 
         var totalDude = 10;
@@ -64,7 +76,7 @@
             dude.position.y = Math.random() * viewHeight;
 
             // time to add the dude to the pond container!
-            dudesContainer.addChild(dude);
+            subContainer.addChild(dude);
 
             // create some extra properties that will control movment
 
