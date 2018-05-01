@@ -36,7 +36,9 @@
         }
       ]
     ],
-    "plugins": ["transform-vue-jsx"]
+    "plugins": [
+      "transform-vue-jsx"
+    ]
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
