@@ -19,21 +19,19 @@ const implementations = {
 }
 
 function constructorName(pixiObj, baseConsturctor = null, deep = 5) {
-    let cntName = pixiObj.constructor.name;
+    const cntName = pixiObj.constructor.name;
     const bconst = baseConsturctor || cntName;
     if (deep < 0) {
         return baseConsturctor || cntName;
-    } else {
-        deep--;
     }
+    deep--;
     if (implementations.hasOwnProperty(cntName)) {
         return cntName;
     }
     if (pixiObj.__proto__) {
         return constructorName(pixiObj.__proto__, bconst, deep);
-    } else {
-        return baseConsturctor;
     }
+    return baseConsturctor;
 }
 
 function onlyUnique(value, index, self) { 
