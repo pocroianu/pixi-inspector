@@ -1,4 +1,5 @@
 export default [
+    "alpha",
     "anchor",
     "blendMode",
     "buttonMode",
